@@ -1,9 +1,12 @@
-// app/types.ts
+// src/types.ts
+
+export type Difficulty = 'EASY' | 'MEDIUM' | 'HARD';
+
 export type RootStackParamList = {
   Stats: undefined;
   ModeSelect: undefined;
-  Game: { mode: 'PVP' | 'BOT' };
-  Settings: undefined; // If you're using the settings popup/modal
+  Difficulty: { mode: 'PVP' | 'BOT' };
+  Game: { mode: 'PVP' | 'BOT'; difficulty: Difficulty };
 };
 
 export type StatsType = {

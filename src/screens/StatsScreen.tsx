@@ -1,5 +1,7 @@
+// src/screens/StatsScreen.tsx
+
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ImageBackground, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from '../utils/themeContext';
 import { StatsType } from '../types';
@@ -28,7 +30,9 @@ const StatsScreen = () => {
       <View style={[styles.darkOverlay, isDarkMode && styles.darkOverlayOn]} />
 
       <View style={styles.topRight}>
-        <Button title="⚙" onPress={() => setShowSettings(true)} color={isDarkMode ? '#ddd' : undefined} />
+        <Pressable onPress={() => setShowSettings(true)}>
+         <Text style={{ fontSize: 22, color: '#fff' }}>⚙</Text>
+       </Pressable>
       </View>
 
       <View style={styles.centerContent}>

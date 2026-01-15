@@ -1,4 +1,9 @@
-// utils/cardUtils.ts
+// src/utils/cardUtils.ts
+
+export const EMOJIS = [
+  '🍎','🍌','🍇','🍓','🍒','🍍','🥝','🍑',
+  '🍉','🍊','🍋','🍐','🥭','🫐','🍈'
+];
 
 export type CardType = {
   id: number;

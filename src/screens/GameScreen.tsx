@@ -1,4 +1,4 @@
-// app/screens/GameScreen.tsx
+// src/screens/GameScreen.tsx
 import React, { useEffect, useState, useContext } from 'react';
 import {
   View,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  Button,
+  Pressable,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import Card from '../components/Card';
@@ -23,8 +23,18 @@ type GameScreenRouteProp = RouteProp<RootStackParamList, 'Game'>;
 const GameScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<GameScreenRouteProp>();
-  const mode = route.params.mode;
+
+  const { mode, difficulty } = route.params; // ✅ FIX
   const { isDarkMode, isSoundOn } = useContext(ThemeContext);
+
+  const difficultyCardMap = {
+    EASY: 12,
+    MEDIUM: 20,
+    HARD: 30,
+  };
+
+  const totalCards = difficultyCardMap[difficulty];
+  const numColumns = difficulty === 'HARD' ? 6 : 4;
 
   const [cards, setCards] = useState<CardType[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
@@ -43,10 +53,6 @@ const GameScreen = () => {
     player2Wins: 0,
     botWins: 0,
   });
-
-  const isTablet = Dimensions.get('window').width >= 768;
-  const numColumns = isTablet ? 6 : 5;
-  const totalCards = numColumns * (isTablet ? 3 : 4);
 
   useEffect(() => {
     setCards(generateShuffledCards(totalCards));
@@ -168,16 +174,13 @@ const GameScreen = () => {
       <View style={[styles.darkOverlay, isDarkMode && styles.darkOverlayOn]} />
 
       <View style={styles.topRow}>
-        <Button
-          title="Back"
-          onPress={() => navigation.goBack()}
-          color={isDarkMode ? '#ddd' : undefined}
-        />
-        <Button
-          title="⚙"
-          onPress={() => setShowSettings(true)}
-          color={isDarkMode ? '#ddd' : undefined}
-        />
+        <Pressable onPress={() => navigation.goBack()}>
+          <Text style={{ color: '#fff', fontSize: 18 }}>← Back</Text>
+        </Pressable>
+
+        <Pressable onPress={() => setShowSettings(true)}>
+           <Text style={{ color: '#fff', fontSize: 22 }}>⚙</Text>
+       </Pressable>
       </View>
 
       <View style={styles.container}>
@@ -216,16 +219,18 @@ const GameScreen = () => {
             <Text style={[styles.gameOverText, isDarkMode && styles.gameOverTextLight]}>
               🎉 Game Over! Press below to view stats.
             </Text>
-            <Button
-              title="View Stats"
+            <Pressable
+              style={{ paddingVertical: 10, paddingHorizontal: 25, backgroundColor: '#007AFF', borderRadius: 8 }}
               onPress={() => {
-                setShowSettings(false);
+               setShowSettings(false);
                 navigation.navigate('Stats' as never);
-              }}
-              color={isDarkMode ? '#bbb' : undefined}
-            />
-            <Button
-              title="Play Again"
+             }}
+            >
+             <Text style={{ color: '#fff', fontSize: 16 }}>View Stats</Text>
+            </Pressable>
+
+            <Pressable
+              style={{ paddingVertical: 10, paddingHorizontal: 25, backgroundColor: '#007AFF', borderRadius: 8, marginTop: 10 }}
               onPress={() => {
                 setCards(generateShuffledCards(totalCards));
                 setMatchedCards([]);
@@ -235,8 +240,9 @@ const GameScreen = () => {
                 setTurn('Player 1');
                 setStartTime(Date.now());
               }}
-              color={isDarkMode ? '#bbb' : undefined}
-            />
+            >
+              <Text style={{ color: '#fff', fontSize: 16 }}>Play Again</Text>
+            </Pressable>
           </View>
         </View>
       )}

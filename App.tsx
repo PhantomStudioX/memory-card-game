@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ThemeProvider } from './src/utils/themeContext';
 import ModeSelectScreen from './src/screens/ModeSelectScreen';
+import DifficultyScreen from './src/screens/DifficultyScreen'; // ✅ FIX
 import GameScreen from './src/screens/GameScreen';
 import StatsScreen from './src/screens/StatsScreen';
 import { RootStackParamList } from './src/types';
@@ -19,6 +20,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Stats" component={StatsScreen} />
             <Stack.Screen name="ModeSelect" component={ModeSelectScreen} />
+            <Stack.Screen name="Difficulty" component={DifficultyScreen} />
             <Stack.Screen name="Game" component={GameScreen} />
           </Stack.Navigator>
         </NavigationContainer>

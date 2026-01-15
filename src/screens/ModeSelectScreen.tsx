@@ -1,3 +1,5 @@
+// src/screens/ModeSelectScreen.tsx
+
 import React, { useContext, useState, useMemo } from 'react';
 import {
   View,
@@ -46,14 +48,14 @@ const ModeSelectScreen = () => {
 
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate('Game', { mode: 'PVP' })}
+          onPress={() => navigation.navigate('Difficulty', { mode: 'PVP' })}
         >
           <Text style={styles.buttonText}>Player vs Player</Text>
         </Pressable>
 
         <Pressable
           style={styles.button}
-          onPress={() => navigation.navigate('Game', { mode: 'BOT' })}
+          onPress={() => navigation.navigate('Difficulty', { mode: 'BOT' })}
         >
           <Text style={styles.buttonText}>Player vs Bot</Text>
         </Pressable>

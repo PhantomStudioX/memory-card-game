@@ -1,4 +1,5 @@
-// components/Card.tsx
+// src/components/Card.tsx
+import { EMOJIS } from '../utils/cardUtils';
 import React, { useEffect, useRef } from 'react';
 import {
   TouchableWithoutFeedback,
@@ -9,7 +10,7 @@ import {
 } from 'react-native';
 
 type Props = {
-  value: string;
+  value: number;
   isFlipped: boolean;
   shouldCelebrate: boolean;
   onPress: () => void;
@@ -101,7 +102,7 @@ const Card: React.FC<Props> = ({
             },
           ]}
         >
-          <Text style={styles.cardText}>{value}</Text>
+          <Text style={styles.cardText}>{EMOJIS[value]}</Text>
         </Animated.View>
       </Animated.View>
     </TouchableWithoutFeedback>

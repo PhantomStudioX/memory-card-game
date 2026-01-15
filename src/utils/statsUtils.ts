@@ -1,4 +1,4 @@
-// app/utils/statsUtils.ts
+// src/utils/statsUtils.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatsType } from '../types';
 
