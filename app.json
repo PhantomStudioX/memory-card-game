@@ -29,8 +29,8 @@
     "web": {
       "bundler": "metro",
       "display": "standalone",
-      "scope": "/",
-      "startUrl": "/",
+      "startUrl": ".",
+      "scope": ".",
       "favicon": "./assets/favicon.png"
     },
 
