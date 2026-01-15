@@ -1,14 +1,17 @@
 // src/screens/DifficultyScreen.tsx
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ImageBackground } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, Difficulty } from '../types';
 import { ThemeContext } from '../utils/themeContext';
+import SettingsModal from '../components/SettingsModal';
 
 type RouteProps = RouteProp<RootStackParamList, 'Difficulty'>;
 type NavProps = NativeStackNavigationProp<RootStackParamList, 'Difficulty'>;
+
+const [showSettings, setShowSettings] = useState(false);
 
 const DifficultyScreen = () => {
   const { params } = useRoute<RouteProps>();
@@ -22,6 +25,11 @@ const DifficultyScreen = () => {
     });
   };
 
+      <SettingsModal
+      visible={showSettings}
+      onClose={() => setShowSettings(false)}
+    />
+
   return (
     <ImageBackground
       source={require('../../assets/images/summer-bg.jpg')}
@@ -33,7 +41,7 @@ const DifficultyScreen = () => {
          <Text style={styles.topIcon}>← Back</Text>
         </Pressable>
 
-         <Pressable onPress={() => navigation.navigate('Settings' as never)}>
+         <Pressable onPress={() => setShowSettings(true)}>
            <Text style={styles.topIcon}>⚙</Text>
          </Pressable>
       </View>

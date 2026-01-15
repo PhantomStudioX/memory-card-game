@@ -24,18 +24,18 @@ const GameScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<GameScreenRouteProp>();
 
-  const { mode, difficulty } = route.params; // ✅ FIX
+  const { mode, difficulty } = route.params;
   const { isDarkMode, isSoundOn } = useContext(ThemeContext);
 
   const difficultyCardMap = {
-    EASY: 12,
-    MEDIUM: 20,
+    EASY: 9,
+    MEDIUM: 25,
     HARD: 30,
   };
 
   const totalCards = difficultyCardMap[difficulty];
   const numColumns =
-  difficulty === 'EASY' ? 3 : difficulty === 'MEDIUM' ? 4 : 6;
+  difficulty === 'EASY' ? 3 : difficulty === 'MEDIUM' ? 5 : 6;
 
   const [botMemory, setBotMemory] = useState<Record<string, number[]>>({});
   const [cards, setCards] = useState<CardType[]>([]);
@@ -81,7 +81,12 @@ const GameScreen = () => {
     const isMatch = first.value === second.value;
     if (isMatch) {
       setMatchedCards(prev => [...prev, i1, i2]);
-      if (isSoundOn) playMatchSound();
+
+      if (isSoundOn) {
+        setTimeout(() => {
+          playMatchSound();
+        }, 150);
+      }
     }
 
     if (!isMatch && mode === 'BOT') {
@@ -188,17 +193,26 @@ const GameScreen = () => {
       selectedCards.includes(index) ||
       matchedCards.includes(index) ||
       selectedCards.length >= 2 ||
-      (mode === 'BOT' && turn === 'Bot') ||
-      gameOver
-    )
+      gameOver ||
+      (mode === 'BOT' && (turn === 'Bot' || isBotThinking))
+    ) {
       return;
+    }
 
     setSelectedCards(prev => [...prev, index]);
     if (isSoundOn) playFlipSound();
   };
 
   const cardSpacing = 8;
-  const cardWidth = (Dimensions.get('window').width - cardSpacing * (numColumns + 1)) / numColumns;
+  const baseCardWidth =
+    (Dimensions.get('window').width - cardSpacing * (numColumns + 1)) / numColumns;
+
+  const sizeMultiplier =
+    difficulty === 'EASY' ? 0.95 :
+    difficulty === 'MEDIUM' ? 0.9 :
+    0.85;
+
+  const cardWidth = baseCardWidth * sizeMultiplier;
   const cardHeight = cardWidth * 1.15;
 
   return (
