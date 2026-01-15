@@ -54,7 +54,7 @@ const StatsScreen = () => {
           </Text>
         </View>
         <TouchableOpacity style={styles.playButton} onPress={() => navigation.navigate('ModeSelect' as never)}>
-          <Text style={styles.playButtonText}>Play Again</Text>
+          <Text style={styles.playButtonText}>Play</Text>
         </TouchableOpacity>
       </View>
 
