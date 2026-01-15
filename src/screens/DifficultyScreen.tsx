@@ -27,6 +27,17 @@ const DifficultyScreen = () => {
       source={require('../../assets/images/summer-bg.jpg')}
       style={styles.background}
     >
+
+      <View style={styles.topRow}>
+       <Pressable onPress={() => navigation.goBack()}>
+         <Text style={styles.topIcon}>← Back</Text>
+        </Pressable>
+
+         <Pressable onPress={() => navigation.navigate('Settings' as never)}>
+           <Text style={styles.topIcon}>⚙</Text>
+         </Pressable>
+      </View>
+
       <View style={[styles.overlay, isDarkMode && styles.dark]}>
         <Text style={[styles.title, isDarkMode && styles.textLight]}>
           Select Difficulty
@@ -78,6 +89,21 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+
+  topRow: {
+  position: 'absolute',
+  top: 40,
+  left: 20,
+  right: 20,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  zIndex: 10,
+},
+topIcon: {
+  color: '#fff',
+  fontSize: 18,
+},
+
 });
 
 export default DifficultyScreen;

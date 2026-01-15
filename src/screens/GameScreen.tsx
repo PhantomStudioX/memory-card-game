@@ -34,8 +34,10 @@ const GameScreen = () => {
   };
 
   const totalCards = difficultyCardMap[difficulty];
-  const numColumns = difficulty === 'HARD' ? 6 : 4;
+  const numColumns =
+  difficulty === 'EASY' ? 3 : difficulty === 'MEDIUM' ? 4 : 6;
 
+  const [botMemory, setBotMemory] = useState<Record<string, number[]>>({});
   const [cards, setCards] = useState<CardType[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
@@ -56,6 +58,7 @@ const GameScreen = () => {
 
   useEffect(() => {
     setCards(generateShuffledCards(totalCards));
+    setBotMemory({});
     loadSounds();
     loadStats().then(setStats);
     setStartTime(Date.now());
@@ -79,6 +82,23 @@ const GameScreen = () => {
     if (isMatch) {
       setMatchedCards(prev => [...prev, i1, i2]);
       if (isSoundOn) playMatchSound();
+    }
+
+    if (!isMatch && mode === 'BOT') {
+      setBotMemory(prev => {
+        const updated = { ...prev };
+
+        selectedCards.forEach(i => {
+          const value = cards[i]?.value;
+           if (!value) return;
+
+           updated[value] = updated[value]
+             ? Array.from(new Set([...updated[value], i]))
+             : [i];
+         });
+
+         return updated;
+       });
     }
 
     setTimeout(() => {
@@ -118,7 +138,22 @@ const GameScreen = () => {
           setIsBotThinking(false);
           return;
         }
-        const picks = available.sort(() => 0.5 - Math.random()).slice(0, 2);
+
+        let picks: number[] | null = null;
+
+        // Try to find a known matching pair
+        for (const indices of Object.values(botMemory)) {
+          const valid = indices.filter(i => available.includes(i));
+          if (valid.length >= 2) {
+            picks = valid.slice(0, 2);
+            break;
+          }
+        }
+  
+        // Fallback to random
+        if (!picks) {
+          picks = available.sort(() => 0.5 - Math.random()).slice(0, 2);
+    }
         setSelectedCards(picks);
         if (isSoundOn) playFlipSound();
         setIsBotThinking(false);
@@ -233,6 +268,7 @@ const GameScreen = () => {
               style={{ paddingVertical: 10, paddingHorizontal: 25, backgroundColor: '#007AFF', borderRadius: 8, marginTop: 10 }}
               onPress={() => {
                 setCards(generateShuffledCards(totalCards));
+                setBotMemory({});
                 setMatchedCards([]);
                 setSelectedCards([]);
                 setCelebrate(false);
