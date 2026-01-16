@@ -25,11 +25,6 @@ const DifficultyScreen = () => {
     });
   };
 
-      <SettingsModal
-      visible={showSettings}
-      onClose={() => setShowSettings(false)}
-    />
-
   return (
     <ImageBackground
       source={require('../../assets/images/summer-bg.jpg')}
@@ -63,6 +58,11 @@ const DifficultyScreen = () => {
           <Text style={styles.buttonText}>Hard</Text>
         </Pressable>
       </View>
+
+      <SettingsModal
+        visible={showSettings}
+        onClose={() => setShowSettings(false)}
+      />
     </ImageBackground>
   );
 };

@@ -230,10 +230,15 @@ const GameScreen = () => {
   const horizontalPadding = 32; // container padding
   const gap = 10;
 
-  const cardWidth =
+  const baseCardWidth =
     (screenWidth - horizontalPadding - gap * (numColumns - 1)) / numColumns;
 
+  const sizeMultiplier =
+    difficulty === 'MEDIUM' ? 0.88 : 1;
+
+  const cardWidth = baseCardWidth * sizeMultiplier;
   const cardHeight = cardWidth * 1.1;
+  
   return (
     <ImageBackground
       source={require('../../assets/images/summer-bg.jpg')}
