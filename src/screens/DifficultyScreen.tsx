@@ -11,12 +11,12 @@ import SettingsModal from '../components/SettingsModal';
 type RouteProps = RouteProp<RootStackParamList, 'Difficulty'>;
 type NavProps = NativeStackNavigationProp<RootStackParamList, 'Difficulty'>;
 
-const [showSettings, setShowSettings] = useState(false);
-
 const DifficultyScreen = () => {
   const { params } = useRoute<RouteProps>();
   const navigation = useNavigation<NavProps>();
   const { isDarkMode } = useContext(ThemeContext);
+
+  const [showSettings, setShowSettings] = useState(false);
 
   const selectDifficulty = (difficulty: Difficulty) => {
     navigation.navigate('Game', {
