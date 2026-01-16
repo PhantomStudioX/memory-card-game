@@ -222,17 +222,28 @@ const GameScreen = () => {
     if (isSoundOn) playFlipSound();
   };
 
-  const cardSpacing = 8;
-  const baseCardWidth =
-    (Dimensions.get('window').width - cardSpacing * (numColumns + 1)) / numColumns;
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
+  const cardSpacing = 8;
+
+  // width-based sizing
+  const baseCardWidth =
+    (screenWidth - cardSpacing * (numColumns + 1)) / numColumns;
+
+  // make EASY cards smaller so 3 rows fit
   const sizeMultiplier =
-    difficulty === 'EASY' ? 0.95 :
+    difficulty === 'EASY' ? 0.85 :
     difficulty === 'MEDIUM' ? 0.9 :
     0.85;
 
   const cardWidth = baseCardWidth * sizeMultiplier;
-  const cardHeight = cardWidth * 1.15;
+
+  // reduce height ratio so grid fits vertically
+  const cardHeight =
+    difficulty === 'EASY'
+      ? cardWidth * 1.05
+      : cardWidth * 1.15;
 
   return (
     <ImageBackground
@@ -365,6 +376,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    alignItems: 'center',
     gap: 8,
   },
   textLight: { color: '#fff' },
