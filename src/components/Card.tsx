@@ -122,11 +122,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   front: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#064db0',
     borderColor: '#888',
   },
   back: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#244cef',
     borderColor: '#333',
   },
   cardText: {
