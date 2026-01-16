@@ -45,6 +45,7 @@ const GameScreen = () => {
   const [startTime, setStartTime] = useState(Date.now());
   const [turn, setTurn] = useState<'Player 1' | 'Player 2' | 'Bot'>('Player 1');
   const [isBotThinking, setIsBotThinking] = useState(false);
+  const [winner, setWinner] = useState<'PLAYER' | 'BOT' | 'P1' | 'P2' | null>(null);
   const [gameOver, setGameOver] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [stats, setStats] = useState<StatsType>({
@@ -159,7 +160,14 @@ const GameScreen = () => {
         if (!picks) {
           picks = available.sort(() => 0.5 - Math.random()).slice(0, 2);
     }
-        setSelectedCards(picks);
+        setSelectedCards([picks[0]]);
+        if (isSoundOn) playFlipSound();
+
+        setTimeout(() => {
+          setSelectedCards(prev => [...prev, picks![1]]);
+          if (isSoundOn) playFlipSound();
+          setIsBotThinking(false);
+        }, 700);
         if (isSoundOn) playFlipSound();
         setIsBotThinking(false);
       }, 800);
@@ -167,26 +175,37 @@ const GameScreen = () => {
   }, [turn, isBotThinking, selectedCards, matchedCards, mode, gameOver, cards, isSoundOn]);
 
   // Check for game over
-  useEffect(() => {
-    if (matchedCards.length === cards.length && cards.length > 0) {
-      const duration = Math.floor((Date.now() - startTime) / 1000);
-      setCelebrate(true);
-      setGameOver(true);
+    useEffect(() => {
+      if (matchedCards.length === cards.length && cards.length > 0) {
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+        setCelebrate(true);
+        setGameOver(true);
 
-      const updated: StatsType = {
-        gamesPlayed: stats.gamesPlayed + 1,
-        bestTime: stats.bestTime === 0 ? duration : Math.min(stats.bestTime, duration),
-        lastGameTime: duration,
-        player1Wins:
-          mode === 'PVP' && turn === 'Player 1' ? stats.player1Wins + 1 : stats.player1Wins,
-        player2Wins:
-          mode === 'PVP' && turn === 'Player 2' ? stats.player2Wins + 1 : stats.player2Wins,
-        botWins: mode === 'BOT' ? stats.botWins + 1 : stats.botWins,
-      };
+        let newWinner: typeof winner = null;
 
-      saveStats(updated).then(() => setStats(updated));
-    }
-  }, [matchedCards]);
+        if (mode === 'BOT') {
+          newWinner = turn === 'Bot' ? 'BOT' : 'PLAYER';
+        } else {
+          newWinner = turn === 'Player 1' ? 'P1' : 'P2';
+        }
+
+        setWinner(newWinner);
+
+        const updated: StatsType = {
+          gamesPlayed: stats.gamesPlayed + 1,
+          bestTime: stats.bestTime === 0 ? duration : Math.min(stats.bestTime, duration),
+          lastGameTime: duration,
+          player1Wins:
+            newWinner === 'P1' ? stats.player1Wins + 1 : stats.player1Wins,
+          player2Wins:
+            newWinner === 'P2' ? stats.player2Wins + 1 : stats.player2Wins,
+          botWins:
+            newWinner === 'BOT' ? stats.botWins + 1 : stats.botWins,
+        };
+
+        saveStats(updated).then(() => setStats(updated));
+      }
+    }, [matchedCards]);
 
   const handleCardPress = (index: number) => {
     if (
@@ -266,7 +285,11 @@ const GameScreen = () => {
         <View style={styles.gameOverOverlay}>
           <View style={[styles.gameOverContainer, isDarkMode && styles.gameOverContainerDark]}>
             <Text style={[styles.gameOverText, isDarkMode && styles.gameOverTextLight]}>
-              🎉 Game Over! Press below to view stats.
+              {mode === 'BOT'
+                ? winner === 'PLAYER'
+                  ? '🎉 You Win!'
+                  : '😢 You Lost!'
+                : '🎉 Game Over!'}
             </Text>
             <Pressable
               style={{ paddingVertical: 10, paddingHorizontal: 25, backgroundColor: '#007AFF', borderRadius: 8 }}
@@ -289,6 +312,7 @@ const GameScreen = () => {
                 setGameOver(false);
                 setTurn('Player 1');
                 setStartTime(Date.now());
+                setWinner(null);
               }}
             >
               <Text style={{ color: '#fff', fontSize: 16 }}>Play Again</Text>

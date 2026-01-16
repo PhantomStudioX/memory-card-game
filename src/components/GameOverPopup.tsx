@@ -1,4 +1,4 @@
-// app/components/GameOverPopup.tsx
+// src/components/GameOverPopup.tsx
 import React from 'react';
 import {
   Modal,
