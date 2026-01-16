@@ -1,4 +1,4 @@
-// components/ConfettiAnimation.tsx
+// src/components/ConfettiAnimation.tsx
 import React from 'react';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { View, StyleSheet } from 'react-native';

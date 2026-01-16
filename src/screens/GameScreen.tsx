@@ -28,14 +28,18 @@ const GameScreen = () => {
   const { isDarkMode, isSoundOn } = useContext(ThemeContext);
 
   const difficultyCardMap = {
-    EASY: 9,
-    MEDIUM: 25,
-    HARD: 30,
+    EASY: 12,
+    MEDIUM: 16,
+    HARD: 24,
   };
 
   const totalCards = difficultyCardMap[difficulty];
   const numColumns =
-  difficulty === 'EASY' ? 3 : difficulty === 'MEDIUM' ? 5 : 6;
+    difficulty === 'EASY'
+      ? 4
+      : difficulty === 'MEDIUM'
+      ? 4
+      : 6;
 
   const [botMemory, setBotMemory] = useState<Record<string, number[]>>({});
   const [cards, setCards] = useState<CardType[]>([]);
@@ -223,29 +227,13 @@ const GameScreen = () => {
   };
 
   const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
+  const horizontalPadding = 32; // container padding
+  const gap = 10;
 
-  const cardSpacing = 8;
+  const cardWidth =
+    (screenWidth - horizontalPadding - gap * (numColumns - 1)) / numColumns;
 
-  // width-based sizing
-  const baseCardWidth =
-    (screenWidth - cardSpacing * (numColumns + 1)) / numColumns;
-
-  // make EASY cards smaller so 3 rows fit
-  const sizeMultiplier =
-    difficulty === 'EASY' ? 0.85 :
-    difficulty === 'MEDIUM' ? 0.9 :
-    0.85;
-
-  const cardWidth = baseCardWidth * sizeMultiplier;
-
-  // reduce height ratio so grid fits vertically
-  const cardHeight =
-    difficulty === 'EASY'
-      ? cardWidth * 1.05
-      : difficulty === 'MEDIUM'
-      ? cardWidth * 1.15
-      : cardWidth * 1.2;
+  const cardHeight = cardWidth * 1.1;
   return (
     <ImageBackground
       source={require('../../assets/images/summer-bg.jpg')}
@@ -377,9 +365,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    alignItems: 'center',
     gap: 10,
-    paddingVertical: 12,
+    paddingVertical: 14,
   },
   textLight: { color: '#fff' },
   textDark: { color: '#000' },

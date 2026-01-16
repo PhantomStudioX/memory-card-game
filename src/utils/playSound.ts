@@ -1,4 +1,4 @@
-// app/utils/playSound.ts
+// src/utils/playSound.ts
 import { Audio } from 'expo-av';
 
 let flipSound: Audio.Sound | null = null;

@@ -1,4 +1,4 @@
-// utils/layoutUtils.ts
+// src/utils/layoutUtils.ts
 import { Dimensions } from 'react-native';
 
 export const getCardLayout = () => {

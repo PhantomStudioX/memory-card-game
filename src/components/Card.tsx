@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     backfaceVisibility: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
   },
   front: {
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     borderColor: '#333',
   },
   cardText: {
-    fontSize: 32,
+    fontSize: 28,
   },
 });
 
