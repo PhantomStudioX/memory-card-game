@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     borderColor: '#888',
   },
   back: {
-    backgroundColor: '#fff',
+    backgroundColor: '#0647a9',
     borderColor: '#333',
   },
   cardText: {

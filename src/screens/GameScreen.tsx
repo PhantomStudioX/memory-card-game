@@ -243,8 +243,9 @@ const GameScreen = () => {
   const cardHeight =
     difficulty === 'EASY'
       ? cardWidth * 1.05
-      : cardWidth * 1.15;
-
+      : difficulty === 'MEDIUM'
+      ? cardWidth * 1.15
+      : cardWidth * 1.2;
   return (
     <ImageBackground
       source={require('../../assets/images/summer-bg.jpg')}
@@ -377,7 +378,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    gap: 10,
+    paddingVertical: 12,
   },
   textLight: { color: '#fff' },
   textDark: { color: '#000' },
