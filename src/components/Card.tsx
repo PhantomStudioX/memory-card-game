@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   front: {
-    backgroundColor: '#064db0',
+    backgroundColor: '#4A90E2',
     borderColor: '#888',
   },
   back: {
