@@ -111,26 +111,48 @@ const Card: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   card: {
-    margin: 4,
+    margin: 6,
   },
+
   face: {
     position: 'absolute',
     backfaceVisibility: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 12,
+
+    // 🔥 Modern rounded corners
+    borderRadius: 18,
+
+    // ❄️ Glass effect
+    backgroundColor: 'rgba(255,255,255,0.15)',
     borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.25)',
+    overflow: 'hidden',
+
+    // 🌫 Soft shadow
+    shadowColor: '#000',
+    shadowOpacity: 0.18,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 6,
   },
+
+  // 🟦 Card BACK (before flip)
   front: {
-    backgroundColor: '#4A90E2',
-    borderColor: '#888',
+    backgroundColor: 'rgba(255,255,255,0.12)',
   },
+
+  // 🟩 Card FACE (emoji side)
   back: {
-    backgroundColor: '#244cef',
-    borderColor: '#333',
+    backgroundColor: 'rgba(255,255,255,0.25)',
   },
+
   cardText: {
-    fontSize: 28,
+    fontSize: 30,
+    color: '#fff',
+    textShadowColor: 'rgba(0,0,0,0.35)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
 });
 
