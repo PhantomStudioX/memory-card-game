@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -31,7 +31,17 @@ export default function App() {
         </NavigationContainer>
 
         {/* ⭐ ADSTERRE AD — EXACT INSERTION POINT (DO NOT MOVE) */}
-        <AdsterraBanner />
+        <View style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          paddingBottom: 10,
+          zIndex: 9999,
+        }}>
+          <AdsterraBanner />
+        </View>
 
       </SafeAreaView>
     </ThemeProvider>
