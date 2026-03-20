@@ -10,40 +10,37 @@ import GameScreen from './src/screens/GameScreen';
 import StatsScreen from './src/screens/StatsScreen';
 import { RootStackParamList } from './src/types';
 
-import AdsterraBanner from './src/components/AdsterraBanner';   // ⭐ ADDED THIS LINE
+import AdsterraBanner from './src/components/AdsterraBanner';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
     <ThemeProvider>
-     <SafeAreaView style={{ flex: 1, paddingBottom: 260 }}> 
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-            {/* ✅ Correct screen names */}
-            <Stack.Screen name="Stats" component={StatsScreen} />
-            <Stack.Screen name="ModeSelect" component={ModeSelectScreen} />
-            <Stack.Screen name="Difficulty" component={DifficultyScreen} />
-            <Stack.Screen name="Game" component={GameScreen} />
+      {/* 🚫 DO NOT PUT AD INSIDE SafeAreaView */}
+      <View style={{ flex: 1 }}>
 
-          </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-        {/* ⭐ ADSTERRE AD — EXACT INSERTION POINT (DO NOT MOVE) */}
-        <View style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          alignItems: 'center',
-          paddingBottom: 10,
-          zIndex: 9999,
-        }}>
+              <Stack.Screen name="Stats" component={StatsScreen} />
+              <Stack.Screen name="ModeSelect" component={ModeSelectScreen} />
+              <Stack.Screen name="Difficulty" component={DifficultyScreen} />
+              <Stack.Screen name="Game" component={GameScreen} />
+
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+
+        {/* ⭐ FIXED: Banner stays at the bottom without pushing UI */}
+        <View style={{ position: 'absolute', bottom: 0, width: '100%' }}>
           <AdsterraBanner />
         </View>
 
-      </SafeAreaView>
+      </View>
+
     </ThemeProvider>
   );
 }
