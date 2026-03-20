@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <ThemeProvider>
-      <SafeAreaView style={{ flex: 1 }}>
+     <SafeAreaView style={{ flex: 1, paddingBottom: 260 }}> 
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
 
