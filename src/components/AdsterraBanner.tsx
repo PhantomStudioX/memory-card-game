@@ -39,6 +39,7 @@ export default function AdsterraBanner() {
         height: 50,
         marginTop: 10,
         marginBottom: 10,
+        marginLeft: 20,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
